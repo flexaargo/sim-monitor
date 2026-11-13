@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/icon.svg" width="72" height="72" alt="">
+  <img src="assets/icon.svg" width="128" height="128" alt="Sim Monitor icon">
 </p>
 
 <h1 align="center">Sim Monitor</h1>
@@ -161,6 +161,7 @@ Tests/
 scripts/
   build-app.sh        builds and optionally installs SimMonitor.app
   screenshots.sh      regenerates the images in this README
+  make-icon.swift     renders assets/icon.svg into the app icon
 ```
 
 ## Development
@@ -169,6 +170,7 @@ scripts/
 swift run SimMonitor        # run without bundling
 swift test                  # run the tests
 ./scripts/screenshots.sh    # regenerate docs/images from sample data
+swift scripts/make-icon.swift   # rebuild assets/AppIcon.icns from assets/icon.svg
 ```
 
 One test drives the real `simctl`: it creates its own simulator, boots it, checks the
