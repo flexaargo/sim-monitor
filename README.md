@@ -46,6 +46,10 @@ it. A phone icon appears in the menu bar. Run the same command again to update.
 
 To install a specific version, set `SIM_MONITOR_VERSION=1.0.0` in front of `bash`.
 
+Or download `SimMonitor.zip` from the
+[latest release](https://github.com/flexaargo/sim-monitor/releases/latest), unzip it and
+drag `SimMonitor.app` to `/Applications`. Releases are signed and notarized.
+
 ### From source
 
 ```sh
@@ -54,7 +58,8 @@ cd sim-monitor
 ./scripts/build-app.sh --install
 ```
 
-Leave off `--install` to only build into `build/`.
+Leave off `--install` to only build into `build/`. Without a Developer ID certificate in
+your keychain the build is signed ad hoc, which is fine for running it locally.
 
 To start it automatically, open the popover, click **•••** and turn on **Launch at Login**.
 

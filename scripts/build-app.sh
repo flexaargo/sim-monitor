@@ -39,8 +39,16 @@ cat > "$APP/Contents/Info.plist" <<PLIST
 </plist>
 PLIST
 
-codesign --force --sign - "$APP"
-echo "Built $APP ($VERSION, build $BUILD)"
+# Sign with $CODESIGN_IDENTITY, else a Developer ID certificate if the keychain has one,
+# else ad hoc. Ad hoc builds run locally but can't be notarized.
+IDENTITY="${CODESIGN_IDENTITY:-$(security find-identity -v -p codesigning 2>/dev/null \
+    | sed -n 's/.*"\(Developer ID Application: .*\)"/\1/p' | head -1)}"
+if [[ -n "$IDENTITY" ]]; then
+    codesign --force --options runtime --timestamp --sign "$IDENTITY" "$APP"
+else
+    codesign --force --sign - "$APP"
+fi
+echo "Built $APP ($VERSION, build $BUILD, signed: ${IDENTITY:-ad hoc})"
 
 if [[ "${1:-}" == "--install" ]]; then
     pkill -x SimMonitor 2>/dev/null || true
