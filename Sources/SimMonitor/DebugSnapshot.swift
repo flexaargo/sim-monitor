@@ -63,11 +63,15 @@ enum Snapshot {
                     .padding(margin)
             )
             panel.setFrameOrigin(backdrop.frame.origin)
-            NSApp.activate()
             // A child window always stays above its parent; two separate floating windows
             // can come up in either order.
             backdrop.addChildWindow(panel, ordered: .above)
             panel.makeKeyAndOrderFront(nil)
+            // Controls draw dimmed unless the app is frontmost, and a plain activate() is only
+            // a request when launched from a script.
+            NSRunningApplication.current.activate(options: [.activateAllWindows])
+            NSApp.activate(ignoringOtherApps: true)
+            panel.makeKey()
             windows = [backdrop, panel]
 
             try? await Task.sleep(for: .seconds(2))
@@ -91,7 +95,7 @@ enum Snapshot {
             try? await Task.sleep(for: .seconds(1))
             let height = NSScreen.screens.first?.frame.height ?? 0
             let frame = backdrop.frame
-            print("HIGHLIGHT \(store.highlightedID ?? "none") SELECTED \(store.selection.count)")
+            print("ACTIVE \(NSApp.isActive) KEY \(panel.isKeyWindow) HIGHLIGHT \(store.highlightedID ?? "none")")
             print("FRAME \(Int(frame.minX)),\(Int(height - frame.maxY)),\(Int(frame.width)),\(Int(frame.height))")
         }
     }

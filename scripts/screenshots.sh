@@ -16,6 +16,7 @@ shot() {
     for _ in $(seq 1 40); do grep -q FRAME "$LOG" && break; sleep 0.5; done
     local region
     region="$(grep FRAME "$LOG" | head -1 | cut -d' ' -f2)"
+    grep ACTIVE "$LOG"
     screencapture -x -R "$region" "$out"
     kill "$pid"
     wait "$pid" 2>/dev/null || true
