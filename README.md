@@ -38,13 +38,30 @@ lives, and the buttons to boot, stop, wipe or remove it.
 ## Install
 
 ```sh
+curl -fsSL https://github.com/flexaargo/sim-monitor/releases/latest/download/install.sh | bash
+```
+
+This downloads the latest release, copies `SimMonitor.app` to `/Applications` and launches
+it. A phone icon appears in the menu bar. Run the same command again to update.
+
+While the repository is private, anonymous downloads are refused. Use the GitHub CLI,
+which downloads with your login:
+
+```sh
+gh release download -R flexaargo/sim-monitor -p install.sh -O - | bash
+```
+
+To install a specific version, set `SIM_MONITOR_VERSION=1.0.0` in front of `bash`.
+
+### From source
+
+```sh
 git clone git@github.com:flexaargo/sim-monitor.git
 cd sim-monitor
 ./scripts/build-app.sh --install
 ```
 
-This builds `SimMonitor.app`, copies it to `/Applications` and launches it. A phone icon
-appears in the menu bar. Leave off `--install` to only build into `build/`.
+Leave off `--install` to only build into `build/`.
 
 To start it automatically, open the popover, click **•••** and turn on **Launch at Login**.
 
@@ -160,6 +177,8 @@ Tests/
   SimMonitorCoreTests/
 scripts/
   build-app.sh        builds and optionally installs SimMonitor.app
+  install.sh          downloads and installs a released build
+  release.sh          tags a version and publishes it as a GitHub release
   screenshots.sh      regenerates the images in this README
   make-icon.swift     renders assets/icon.svg into the app icon
 ```
@@ -171,6 +190,7 @@ swift run SimMonitor        # run without bundling
 swift test                  # run the tests
 ./scripts/screenshots.sh    # regenerate docs/images from sample data
 swift scripts/make-icon.swift   # rebuild assets/AppIcon.icns from assets/icon.svg
+./scripts/release.sh 1.0.1  # tag, build and publish a release
 ```
 
 One test drives the real `simctl`: it creates its own simulator, boots it, checks the
