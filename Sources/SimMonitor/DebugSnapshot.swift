@@ -64,6 +64,9 @@ enum Snapshot {
             )
             panel.setFrameOrigin(backdrop.frame.origin)
             NSApp.activate()
+            // A child window always stays above its parent; two separate floating windows
+            // can come up in either order.
+            backdrop.addChildWindow(panel, ordered: .above)
             panel.makeKeyAndOrderFront(nil)
             windows = [backdrop, panel]
 
