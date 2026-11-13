@@ -22,7 +22,7 @@ xcrun notarytool history --keychain-profile "$PROFILE" >/dev/null 2>&1 \
     || fail "no notarytool keychain profile named '$PROFILE'"
 
 VERSION="$VERSION" ./scripts/build-app.sh
-codesign -dvv build/SimMonitor.app 2>&1 | grep -q "Authority=Developer ID Application" \
+[[ "$(codesign -dvv build/SimMonitor.app 2>&1)" == *"Authority=Developer ID Application"* ]] \
     || fail "the app is not signed with a Developer ID certificate"
 
 # Notarize, staple the ticket so it verifies offline, then zip the stapled app.
