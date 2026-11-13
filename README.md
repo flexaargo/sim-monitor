@@ -44,13 +44,6 @@ curl -fsSL https://github.com/flexaargo/sim-monitor/releases/latest/download/ins
 This downloads the latest release, copies `SimMonitor.app` to `/Applications` and launches
 it. A phone icon appears in the menu bar. Run the same command again to update.
 
-While the repository is private, anonymous downloads are refused. Use the GitHub CLI,
-which downloads with your login:
-
-```sh
-gh release download -R flexaargo/sim-monitor -p install.sh -O - | bash
-```
-
 To install a specific version, set `SIM_MONITOR_VERSION=1.0.0` in front of `bash`.
 
 ### From source

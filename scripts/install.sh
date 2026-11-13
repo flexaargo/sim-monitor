@@ -26,7 +26,7 @@ fi
 
 echo "Downloading Sim Monitor ${VERSION:-(latest)}..."
 if ! curl -fsSL "$URL" -o "$TMP/$ASSET" 2>/dev/null; then
-    # No anonymous access: fall back to the GitHub CLI, which uses your login.
+    # Fall back to the GitHub CLI, which downloads with your login.
     command -v gh >/dev/null || fail "could not download $URL"
     gh release download ${VERSION:+"v$VERSION"} --repo "$REPO" --pattern "$ASSET" --dir "$TMP" \
         || fail "could not download $ASSET from $REPO"
